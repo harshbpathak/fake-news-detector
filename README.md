@@ -60,19 +60,17 @@ This project aims to classify news articles as **Fake** or **Real** using both t
 
 ## 🚀 Run the Project
 
-### 1. Make a directory and a virtual environment
-
-```bash
-mkdir fake-news-detector
-python -m venv venv
-source venv/Scripts/activate
-````
-
-### 2. Clone the repo
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/yourusername/fake-news-detector.git
 cd fake-news-detector
+````
+### 2. Make a virtual environment
+
+```bash
+python -m venv venv
+source venv/Scripts/activate
 ````
 
 ### 3. Install dependencies
