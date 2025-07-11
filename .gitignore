@@ -1,0 +1,13 @@
+
+venv/
+__pycache__/
+ipynb_checkpoints/
+misinformation_model_final/
+data/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.log
+*.csv
+.env
