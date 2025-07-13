@@ -11,3 +11,4 @@ data/
 *.log
 *.csv
 .env
+models/

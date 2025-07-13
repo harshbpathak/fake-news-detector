@@ -2,14 +2,20 @@ import gradio as gr
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 from llm_layer import fact_check_with_llm
+import joblib
 
 # Load the model and tokenizer
 MODEL_PATH = "./misinformation_model_final"
 LABELS = ["Fake", "Real"]
+# Load logistic regression and random forest models
+lr_model = joblib.load('./models/logistic_model.pkl')
+rf_model = joblib.load('./models/random_forest_model.pkl')
+vectorizer = joblib.load('./models/tfidf_vectorizer.pkl')
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
 model.eval()
+
 
 def classify_news(text):
     # Step 1: Get ML model prediction
@@ -20,14 +26,23 @@ def classify_news(text):
         probs = torch.softmax(logits, dim=1).squeeze()
         pred = torch.argmax(probs).item()
         confidence = probs[pred].item()
+    # results of LR and RF models
+    vectorized_input = vectorizer.transform([text])
+    lr_pred = lr_model.predict(vectorized_input)[0]
+    rf_pred = rf_model.predict(vectorized_input)[0]
 
-    # Step 2: Get LLM justification
+    lr_proba = lr_model.predict_proba(vectorized_input)[0]
+    rf_proba = rf_model.predict_proba(vectorized_input)[0]
+
     llm_explanation = fact_check_with_llm(text)
 
-    # Step 3: Combine results
     result = (
-        f"### 🤖 ML Prediction: **{LABELS[pred].upper()}**\n"
-        f"**Confidence:** {confidence:.2%}\n\n"
+        f"### 🤖 Transformer model Prediction: **{LABELS[pred].upper()}**\n"
+        f"**Confidence:** {round(confidence * 100, 2)}%\n\n"
+        f"### 📊 Logistic Regression Model Prediction: **{'Real' if lr_pred == 1 else 'Fake'}**\n"
+        f"**Confidence:** {round(lr_proba[lr_pred] * 100, 2)}%\n\n"
+        f"### 🌲 Random Forest Model Prediction: **{'Real' if rf_pred == 1 else 'Fake'}**\n"
+        f"**Confidence:** {round(rf_proba[rf_pred] * 100, 2)}%\n\n"
         f"---\n\n"
         f"### 🧠 LLM Check:\n{llm_explanation}"
     )
