@@ -3,7 +3,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trai
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-# Load and prepare data
+
 df_fake = pd.read_csv("data/Fake.csv")
 df_true = pd.read_csv("data/True.csv")
 df_fake['label'] = 0
@@ -17,11 +17,10 @@ train_texts, test_texts, train_labels, test_labels = train_test_split(
     df['text'], df['label'], test_size=0.2, random_state=42
 )
 
-# Convert to datasets
 train_dataset = Dataset.from_dict({"text": train_texts, "label": train_labels})
 test_dataset = Dataset.from_dict({"text": test_texts, "label": test_labels})
 
-# Tokenize
+
 model_name = "distilbert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
@@ -44,7 +43,6 @@ training_args = TrainingArguments(
     logging_dir="./logs",
 )
 
-# Trainer
 trainer = Trainer(
     model=model,
     args=training_args,
@@ -52,5 +50,8 @@ trainer = Trainer(
     eval_dataset=test_dataset,
 )
 
-# Train!
+
 trainer.train()
+
+model.save_pretrained("./misinformational_model_final")
+tokenizer.save_pretrained("./misinformational_model_final")

@@ -2,10 +2,11 @@ import os
 from dotenv import load_dotenv
 import requests
 
+
 # Load the environment variable
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
+GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
 
 def fact_check_with_llm(news_text):

@@ -82,10 +82,16 @@ pip install -r requirements.txt
 If using GPU:
 
 ```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 
+#not required to run if u have downlaoded the model from drive
 ```
+### 4. Train the models
 
-### 4. Run Gradio app
+# For the LR and RF models just re-run the jupyter notebook with a models directory in the project directory.
+
+# For the DistilBERT model I would recommend to download it through the drive else you have to rewrite the train_model.py code in google colab as window CPU would take around 5-6 hours to train while colab can do it in 45 minutes.Download it and save it according to the project directory.
+
+### 5. Run Gradio app
 
 ```bash
 python app.py
@@ -117,8 +123,8 @@ Confusion Matrix (DistilBERT):
 
 ## 💡 Future Improvements
 
-* Add Explainability with LIME or SHAP
-* Host the model with Hugging Face Spaces or Streamlit Cloud
+* Add step-by-step instructions for installing Python and setting up your environment for absolute beginners.
+* Integrate and document the optional LLM verification layer (`llm_layer.py`) for enhanced prediction reliability.
 * Expand dataset with multilingual news
 
 ---
