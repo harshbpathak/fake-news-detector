@@ -87,9 +87,9 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 ```
 ### 4. Train the models
 
-# For the LR and RF models just re-run the jupyter notebook with a models directory in the project directory.
+For the LR and RF models just re-run the jupyter notebook with a models directory in the project directory.
 
-# For the DistilBERT model I would recommend to download it through the drive else you have to rewrite the train_model.py code in google colab as window CPU would take around 5-6 hours to train while colab can do it in 45 minutes.Download it and save it according to the project directory.
+For the DistilBERT model I would recommend to download it through the drive else you have to rewrite the train_model.py code in google colab as window CPU would take around 5-6 hours to train while colab can do it in 45 minutes.Download it and save it according to the project directory.
 
 ### 5. Run Gradio app
 
